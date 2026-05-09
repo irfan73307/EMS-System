@@ -9,4 +9,5 @@ frontend/build/
 
 .env
 .env.*
+!backend/.env.example
 *.log

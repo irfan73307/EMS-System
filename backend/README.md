@@ -36,7 +36,7 @@ A modern, production-ready REST API for Employee Management System built with Ex
 
 2. **Configure MongoDB**
    - Ensure MongoDB is running on `mongodb://127.0.0.1:27017`
-   - Or update connection string in `server.js`
+    - Copy `.env.example` to `.env` and update `MONGO_URI` if needed
 
 3. **Start the server**
    ```bash
