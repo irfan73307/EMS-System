@@ -1,15 +1,53 @@
 const express = require("express");
+const fs = require("fs");
+const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
+
+const envPath = path.join(__dirname, ".env");
+
+if (fs.existsSync(envPath)) {
+  const envFile = fs.readFileSync(envPath, "utf8");
+
+  envFile.split(/\r?\n/).forEach((line) => {
+    const trimmedLine = line.trim();
+
+    if (!trimmedLine || trimmedLine.startsWith("#")) {
+      return;
+    }
+
+    const equalsIndex = trimmedLine.indexOf("=");
+
+    if (equalsIndex === -1) {
+      return;
+    }
+
+    const key = trimmedLine.slice(0, equalsIndex).trim();
+    let value = trimmedLine.slice(equalsIndex + 1).trim();
+
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+
+    if (!process.env[key]) {
+      process.env[key] = value;
+    }
+  });
+}
+
+const mongoUri = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/Employees";
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect("mongodb://127.0.0.1:27017/Employees")
+mongoose.connect(mongoUri)
   .then(() => console.log("✓ MongoDB Connected"))
   .catch(err => console.error("✗ MongoDB Connection Error:", err));
 
