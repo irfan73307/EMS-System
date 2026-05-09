@@ -1,0 +1,26 @@
+/* App.css - Deprecated, using Tailwind CSS instead */
+
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+th,
+td {
+  text-align: left;
+  border-bottom: 1px solid #e4ebf5;
+  padding: 10px 8px;
+}
+
+@media (max-width: 640px) {
+  .app-container {
+    padding: 16px 12px 28px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+}
